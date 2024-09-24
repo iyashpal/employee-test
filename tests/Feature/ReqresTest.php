@@ -3,13 +3,12 @@
 use App\Facades\Reqres;
 use Illuminate\Support\Facades\Http;
 
+use function Pest\Laravel\{artisan};
 use function PHPUnit\Framework\{assertTrue, assertCount, assertEquals, assertIsArray};
 
-beforeEach(function () {
-    $url = Reqres::getBaseUrl() . "/api/users";
-
-    // Fake response data generator.
-    $generateData = fn(int $start = 1, int $end = 12): array => collect(range($start, $end))
+function generateRecords(int $start = 1, int $end = 12): array
+{
+    return collect(range($start, $end))
         ->map(fn($id) => [
             "id" => $id,
             "email" => "george.bluth@reqres.in",
@@ -17,27 +16,31 @@ beforeEach(function () {
             "last_name" => "Bluth",
             "avatar" => "https://reqres.in/img/faces/{$id}-image.jpg",
         ])->toArray();
+}
+
+beforeEach(function () {
+    $this->url = Reqres::getBaseUrl() . "/api/users";
 
     $firstPageResponse = Http::response([
         "page" => 1,
         "per_page" => 6,
         "total" => 12,
         "total_pages" => 2,
-        'data' => $generateData(1, 6),
+        'data' => generateRecords(1, 6),
     ], 200);
 
 
     Http::fake([
-        $url => $firstPageResponse,
-        "{$url}?page=1" => $firstPageResponse,
-        "{$url}?page=2" => Http::response([
+        $this->url => $firstPageResponse,
+        "{$this->url}?page=1" => $firstPageResponse,
+        "{$this->url}?page=2" => Http::response([
             "page" => 2,
             "per_page" => 6,
             "total" => 12,
             "total_pages" => 2,
-            'data' => $generateData(7, 12),
+            'data' => generateRecords(7),
         ], 200),
-        "{$url}?page=3" => Http::response([
+        "{$this->url}?page=3" => Http::response([
             "page" => 3,
             "per_page" => 6,
             "total" => 12,
@@ -87,4 +90,29 @@ test('it returns empty data when we exceed the total number of pages.', function
     assertIsArray($response->json('data'));
 
     assertCount(0, $response->collect('data'));
+});
+
+test('it syncs users from Reqres API via artisan command.', function () {
+    artisan('reqres:sync-users')
+        ->assertSuccessful()
+        ->expectsOutputToContain('Fetching users from ReqRes "reqres.in"')
+        ->expectsOutputToContain("Total records fetched: 10")
+        ->assertExitCode(1);
+});
+
+test('it syncs users from Reqres API via artisan command with modified per page records.', function ($records) {
+    artisan('reqres:sync-users --per-page-records=' . $records)
+        ->assertSuccessful()
+        ->expectsOutputToContain('Fetching users from ReqRes "reqres.in"')
+        ->expectsOutputToContain("Total records fetched: " . $records)
+        ->assertExitCode(1);
+})->with([2, 4, 6, 7, 5, 9, 10, 12]);
+
+
+test('it syncs users from all available pages of Reqres API via artisan command.', function () {
+    artisan('reqres:sync-users --fetch-all')
+        ->assertSuccessful()
+        ->expectsOutputToContain('Fetching users from ReqRes "reqres.in"')
+        ->expectsOutputToContain("Total records fetched: 12")
+        ->assertExitCode(1);
 });
