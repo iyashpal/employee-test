@@ -1,66 +1,87 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# HeadRed Coding Test
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Guide
 
-## About Laravel
+### Local machine setup (macos/windows)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+#### Required tools to run the code
+- PHP preprocessor
+- Composer
+- MySQL or SQlite
+- Node.js LTS version
+- `npm` or `bun` or `yarn` node package manager (I have used `bun`)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+OR 
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- [Laravel Herd](https://herd.laravel.com/) (available for windows/macos)
 
-## Learning Laravel
+OR
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- [Docker desktop](https://www.docker.com/) (available for windows/macos)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+#### Setup Steps
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Use the `git clone` command (`git clone https://github.com/iyashpal/laravel-test.git`) to pull the code into your system. 
+- Check out to branch name `feature/sync-reqres-users` using command `git checkout feature/sync-reqres-users`
+- Duplicate `.env.example` file to `.env`
+- For quick setup I used sqlite connection. If you want to use the same update following `.env` variables. OR you can change the database drivers listed in `config/database.php` config file.
+```dotenv
+DB_CONNECTION=sqlite
+# DB_HOST=127.0.0.1
+# DB_PORT=3306
+# DB_DATABASE=laravel
+# DB_USERNAME=root
+# DB_PASSWORD=
+```
+- Update `REQRES_BASE_URL` environment variable with following setting. 
+```dotenv
+REQRES_BASE_URL=https://reqres.in
+```
+- Now, install composer dependencies using command `composer install`.
+- Next, generate database tables by running the migration command `php artisan migrate`.
+- One last piece of puzzle is the node dependencies installation. Install node dependencies using command `npm install` or `yarn install` or `bun install`. Choose one that you are using. Mine was `bun install`.
 
-## Laravel Sponsors
+#### Run Code
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- I personally use [laravel herd](https://herd.laravel.com/) on windows and mac. If you are using the same then you will get auto generated url. Please configure the code with laravel herd.
 
-### Premium Partners
+OR
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+- If you prefer to use docker then laravel sail is installed and configured. Run `./vendor/bin/sail up` command to run the project or refer to this [page](https://laravel.com/docs/11.x/sail).
 
-## Contributing
+OR
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- If you are none of above and have required tools installed on your system (PHP Preprocessor, Composer, Node.js) then simple run this command from project root `php artisan serve`. You can now access the project on url `127.0.0.1:8000`.
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Now try to access the app on browser:
 
-## Security Vulnerabilities
+- Oops, got the vite manifest error? Not to worry run vite dev server by using command `npm run dev` OR `yarn dev` OR `bun dev`.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+🎉 You must see the login screen now.
 
-## License
+#### Setup Login User
+- Navigate to url `/register` and register your self.
+- `MustVerifyEmail` is implemented to `User` model so you have to manually verify your account in users table.
+- To mark user as verified put DateTime format string in `email_verified_at` column and you are ready to login. If you login without verify it will show a re-send verification mail page.
+- Once you mark the user verified you can login with the credentials you entered while registration.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Can see the dashboard?
+> 🎉Congratulations🎊 project setup is successful now.
+
+## Questions & Answers
+- Is your code testable?
+
+> Yes, I have tried to cover everything in tests. Added architecture unit tests presets as well as the feature tests. 
+
+- What happens if the API is unavailable?
+> If anything wrong happens with the APIs the command will exit with 0 code. As we will be using the scheduler to fetch the data using command line so it won't affect the app. 
+- If we wanted to add more searchable fields in the future, this should be an easy task.
+> Searchable fields are fully configurable. All we just need is to add/remove the field in search dropdown. 
+- When the scheduled task runs, what happens if the user already exists?
+> In users schema the email is the unique field. So when the scheduled task fetches users it will look for existing records against the user email.
+> If the user against the email is already exists it will update the other fields like `first_name`, `last_name`, `avatar`, `password` and `source`.
+> `source` field is an identifier which will hold the state whether the user is created from `reqres` or `app`
+- If we wanted to change the API to use a different service, how difficult should that be?
+> I have created Reqres service class which includes some methods and properties. All we just need is to configure the api base in `.env` file and if required replace api endpoint in `getUsers` method within the service class.
+> Currently the service class name is identical to Reqres but if needed we can pick a common name for it (i.e. UserDirectoryService). 
