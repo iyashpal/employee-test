@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\User;
 use App\Facades\Reqres;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
@@ -54,8 +55,10 @@ class ReqresUsersCommand extends Command
                     $data->push(...($response->ok() ? $response->json('data') : []));
                 });
 
+            $this->newLine();
             $this->info("Total records fetched: {$data->count()}");
         } catch (\Exception $e) {
+            $this->newLine();
             $this->error($e->getMessage());
 
             return 0;
@@ -63,7 +66,45 @@ class ReqresUsersCommand extends Command
 
         $this->generateOutputTable($data);
 
-        return 1;
+
+        return $this->storeUsersToDatabase($data);
+    }
+
+    /**
+     * Store users to database.
+     *
+     * @param Collection $data
+     * @return void
+     */
+    protected function storeUsersToDatabase(Collection $data): int
+    {
+        try {
+            $this->newLine();
+            $this->line('Storing...');
+            $progress = $this->output->createProgressBar($data->count());
+
+            $progress->start();
+            foreach ($data as $user) {
+                User::updateOrCreate(['email' => $user['email']], [
+                    'avatar' => $user['avatar'],
+                    'first_name' => $user['first_name'],
+                    'last_name' => $user['last_name'],
+                    'password' => 'secret',
+                    'source' => 'reqres',
+                ]);
+
+                $progress->advance();
+            }
+            $progress->finish();
+            $this->newLine();
+            $this->info('Users saved successfully.');
+            return 1;
+        } catch (\Exception $e) {
+            $this->newLine();
+            $this->error($e->getMessage());
+
+            return 0;
+        }
     }
 
     /**
@@ -71,6 +112,7 @@ class ReqresUsersCommand extends Command
      */
     protected function generateOutputTable(Collection $data): void
     {
+        $this->newLine();
         $this->table(
             ['ID', 'First Name', 'Last Name', 'Email', 'Avatar'],
             $data->map(fn ($item) => [
