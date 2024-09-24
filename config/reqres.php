@@ -10,8 +10,7 @@ return [
     | configuration. Defaults to "https://reqres.in" if not set.
     |
     */
-    'base_url' => env('REQRES_BASE_URL', "https://reqres.in"),
-
+    'base_url' => env('REQRES_BASE_URL', 'https://reqres.in'),
 
     /*
     |--------------------------------------------------------------------------
@@ -22,5 +21,5 @@ return [
     | configuration. Defaults to 10 if not set.
     |
     */
-    'per_page_records' => env('REQRES_PER_PAGE_RECORDS', 10)
+    'per_page_records' => env('REQRES_PER_PAGE_RECORDS', 10),
 ];

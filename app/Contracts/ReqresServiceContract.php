@@ -13,7 +13,6 @@ interface ReqresServiceContract
      */
     public function getBaseUrl(): string;
 
-
     /**
      * Get the number of records per page.
      *
@@ -24,10 +23,9 @@ interface ReqresServiceContract
     /**
      * Fetches a list of users from the Reqres API.
      *
-     * @param int $page The page number to retrieve.
-     * @param int|null $perPage The number of records per page. Defaults to the configured value.
-     *
+     * @param  int  $page  The page number to retrieve.
+     * @param  int|null  $perPage  The number of records per page. Defaults to the configured value.
      * @return Response The response from the Reqres API.
      */
-    public function getUsers(int $page = 1, int $perPage = null): Response;
+    public function getUsers(int $page = 1, ?int $perPage = null): Response;
 }

@@ -2,18 +2,15 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Facades\Http;
 use App\Contracts\ReqresServiceContract;
+use Illuminate\Support\Facades\Http;
 
 use function config;
 
 class ReqresService implements ReqresServiceContract
 {
-
     /**
      * The base URL for the Reqres API.
-     *
-     * @var string
      */
     protected string $baseURL;
 
@@ -24,14 +21,10 @@ class ReqresService implements ReqresServiceContract
      */
     protected $perPageRecords;
 
-
     /**
      * HTTP client for making requests to the Reqres API.
-     *
-     * @var \Illuminate\Http\Client\PendingRequest
      */
     protected \Illuminate\Http\Client\PendingRequest $http;
-
 
     /**
      * ReqresService constructor.
@@ -57,7 +50,6 @@ class ReqresService implements ReqresServiceContract
         return $this->baseURL;
     }
 
-
     /**
      * Get the number of records per page.
      *
@@ -68,18 +60,16 @@ class ReqresService implements ReqresServiceContract
         return $this->perPageRecords;
     }
 
-
     /**
      * Fetches a list of users from the Reqres API.
      *
-     * @param int $page The page number to retrieve.
-     * @param int|null $perPage The number of records per page. Defaults to the configured value.
-     *
+     * @param  int  $page  The page number to retrieve.
+     * @param  int|null  $perPage  The number of records per page. Defaults to the configured value.
      * @return \Illuminate\Http\Client\Response The response from the Reqres API.
      *
      * @throws \Illuminate\Http\Client\ConnectionException If there is a connection error.
      */
-    public function getUsers(int $page = 1, int $perPage = null): \Illuminate\Http\Client\Response
+    public function getUsers(int $page = 1, ?int $perPage = null): \Illuminate\Http\Client\Response
     {
         return (clone $this->http)->get('api/users', ['page' => $page, 'per_page' => $perPage ?? $this->perPageRecords]);
     }

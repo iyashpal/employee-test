@@ -44,7 +44,7 @@ class ReqresUsersCommand extends Command
             collect(range($page, $response->json('total_pages')))
 
                 // Filter pages which are not fetched and "--fetch-all" option is true
-                ->filter(fn($targetPage) => $targetPage !== $page && $fetchAll)
+                ->filter(fn ($targetPage) => $targetPage !== $page && $fetchAll)
 
                 // Fetch records for the filtered pages.
                 ->each(function ($page) use ($data, $perPageRecords) {
@@ -68,15 +68,12 @@ class ReqresUsersCommand extends Command
 
     /**
      * Generate output table for fetched users.
-     *
-     * @param Collection $data
-     * @return void
      */
     protected function generateOutputTable(Collection $data): void
     {
         $this->table(
             ['ID', 'First Name', 'Last Name', 'Email', 'Avatar'],
-            $data->map(fn($item) => [
+            $data->map(fn ($item) => [
                 'id' => $item['id'],
                 'first_name' => $item['first_name'],
                 'last_name' => $item['last_name'],
