@@ -1,7 +1,8 @@
 import type {User} from "@/Types/models";
 
 export interface DashboardPageProps {
-    users: PaginationMeta<User[]>
+    users: PaginationMeta<User[]>;
+    query: Record<string, any>
 }
 
 type NullOrString = string | null
