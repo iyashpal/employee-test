@@ -61,7 +61,7 @@ class ReqresUsersCommand extends Command
             $this->newLine();
             $this->error($e->getMessage());
 
-            return 0;
+            return 1;
         }
 
         $this->generateOutputTable($data);
@@ -98,12 +98,12 @@ class ReqresUsersCommand extends Command
             $progress->finish();
             $this->newLine();
             $this->info('Users saved successfully.');
-            return 1;
+            return 0;
         } catch (\Exception $e) {
             $this->newLine();
             $this->error($e->getMessage());
 
-            return 0;
+            return 1;
         }
     }
 
