@@ -31,7 +31,8 @@
         },
         "types": [
             "vite/client",
-            "@types/node"
+            "@types/node",
+            "@types/luxon"
         ]
     },
     "include": [
