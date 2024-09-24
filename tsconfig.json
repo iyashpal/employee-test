@@ -1,0 +1,56 @@
+{
+    "compilerOptions": {
+        "module": "ESNext",
+        "moduleResolution": "Node",
+        "resolveJsonModule": true,
+        "useDefineForClassFields": true,
+        "jsx": "preserve",
+        "noImplicitThis": true,
+        "strict": true,
+        "isolatedModules": true,
+        "target": "ESNext",
+        // Recommended
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true,
+        "composite": true,
+        "lib": [
+            "ES2016",
+            "DOM",
+            "DOM.Iterable"
+        ],
+        "allowSyntheticDefaultImports": true,
+        "baseUrl": ".",
+        "paths": {
+            "@/*": [
+                "resources/app/*"
+            ],
+            "ziggy-js": [
+                "./vendor/tightenco/ziggy"
+            ]
+        },
+        "types": [
+            "vite/client",
+            "@types/node"
+        ]
+    },
+    "include": [
+        "vite.config.ts",
+        "./resources/app/**/*"
+    ],
+    "exclude": [
+        "app",
+        "bootstrap",
+        "config",
+        "database",
+        "node_modules",
+        "public",
+        "resources/lang",
+        "resources/sass",
+        "resources/views",
+        "routes",
+        "storage",
+        "tests",
+        "vendor"
+    ]
+}
