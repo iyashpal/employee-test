@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\User;
 use Inertia\Inertia;
+use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
@@ -12,6 +13,8 @@ class DashboardController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return Inertia::render('Dashboard');
+        $users = User::paginate(10);
+
+        return Inertia::render('Dashboard', compact('users'));
     }
 }
