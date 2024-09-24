@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Facades\Reqres;
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
 
 class ReqresUsersCommand extends Command
 {
@@ -60,6 +61,19 @@ class ReqresUsersCommand extends Command
             return 0;
         }
 
+        $this->generateOutputTable($data);
+
+        return 1;
+    }
+
+    /**
+     * Generate output table for fetched users.
+     *
+     * @param Collection $data
+     * @return void
+     */
+    protected function generateOutputTable(Collection $data): void
+    {
         $this->table(
             ['ID', 'First Name', 'Last Name', 'Email', 'Avatar'],
             $data->map(fn($item) => [
@@ -70,7 +84,5 @@ class ReqresUsersCommand extends Command
                 'avatar' => $item['avatar'],
             ])->toArray(),
         );
-
-        return 1;
     }
 }
