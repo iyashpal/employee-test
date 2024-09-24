@@ -8,6 +8,7 @@ use function PHPUnit\Framework\assertCount;
 use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertIsArray;
 use function PHPUnit\Framework\assertTrue;
+use function Pest\Laravel\assertDatabaseCount;
 
 function generateRecords(int $start = 1, int $end = 12): array
 {
@@ -98,6 +99,8 @@ test('it syncs users from Reqres API via artisan command.', function () {
         ->expectsOutputToContain('Fetching users from ReqRes "reqres.in"')
         ->expectsOutputToContain('Total records fetched: 10')
         ->assertExitCode(1);
+
+    assertDatabaseCount('users', 10);
 });
 
 test('it syncs users from Reqres API via artisan command with modified per page records.', function ($records) {
@@ -106,6 +109,8 @@ test('it syncs users from Reqres API via artisan command with modified per page 
         ->expectsOutputToContain('Fetching users from ReqRes "reqres.in"')
         ->expectsOutputToContain('Total records fetched: '.$records)
         ->assertExitCode(1);
+
+    assertDatabaseCount('users', $records);
 })->with([2, 4, 6, 7, 5, 9, 10, 12]);
 
 test('it syncs users from all available pages of Reqres API via artisan command.', function () {
@@ -114,4 +119,5 @@ test('it syncs users from all available pages of Reqres API via artisan command.
         ->expectsOutputToContain('Fetching users from ReqRes "reqres.in"')
         ->expectsOutputToContain('Total records fetched: 12')
         ->assertExitCode(1);
+    assertDatabaseCount('users', 12);
 });
