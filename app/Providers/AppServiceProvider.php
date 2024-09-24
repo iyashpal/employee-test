@@ -21,5 +21,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Vite::prefetch(concurrency: 3);
+
+        /**
+         * Bind the ReqresServiceContract to an instance of ReqresService
+         */
+        $this->app->bind(\App\Contracts\ReqresServiceContract::class, fn () => new \App\Services\ReqresService());
     }
 }
