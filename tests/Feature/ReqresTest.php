@@ -98,7 +98,7 @@ test('it syncs users from Reqres API via artisan command.', function () {
         ->assertSuccessful()
         ->expectsOutputToContain('Fetching users from ReqRes "reqres.in"')
         ->expectsOutputToContain('Total records fetched: 10')
-        ->assertExitCode(1);
+        ->assertExitCode(0);
 
     assertDatabaseCount('users', 10);
 });
@@ -108,7 +108,7 @@ test('it syncs users from Reqres API via artisan command with modified per page 
         ->assertSuccessful()
         ->expectsOutputToContain('Fetching users from ReqRes "reqres.in"')
         ->expectsOutputToContain('Total records fetched: '.$records)
-        ->assertExitCode(1);
+        ->assertExitCode(0);
 
     assertDatabaseCount('users', $records);
 })->with([2, 4, 6, 7, 5, 9, 10, 12]);
@@ -118,6 +118,6 @@ test('it syncs users from all available pages of Reqres API via artisan command.
         ->assertSuccessful()
         ->expectsOutputToContain('Fetching users from ReqRes "reqres.in"')
         ->expectsOutputToContain('Total records fetched: 12')
-        ->assertExitCode(1);
+        ->assertExitCode(0);
     assertDatabaseCount('users', 12);
 });
