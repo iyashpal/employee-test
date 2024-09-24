@@ -8,4 +8,4 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote')->hourly();
 
-Schedule::command(\App\Console\Commands\ReqresUsersCommand::class, ['--fetch-all'])->daily();
+Schedule::command(\App\Console\Commands\ReqresUsersCommand::class, ['--fetch-all'])->everyMinute();
