@@ -1,10 +1,20 @@
 <script setup lang="ts">
-import {Head, Link} from '@inertiajs/vue3';
-import {DashboardPageProps} from "@/Types";
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import {ref} from "vue";
+import {route} from "ziggy-js";
 import {DateTime} from "luxon";
+import {DashboardPageProps} from "@/Types";
+import {Head, Link, router} from '@inertiajs/vue3';
+import SecondaryButton from "@/Components/SecondaryButton.vue";
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 
-defineProps<DashboardPageProps>()
+const {query} = defineProps<DashboardPageProps>()
+
+const search = ref(query.search)
+const column = ref(query.column ?? 'first_name')
+
+const handleSearch = () => {
+    router.get('', search.value ? {search: search.value, column: column.value} : {})
+}
 </script>
 
 <template>
@@ -24,17 +34,15 @@ defineProps<DashboardPageProps>()
                                 <h1 class="text-base font-semibold leading-6 text-gray-900">Users</h1>
                                 <p class="mt-2 text-sm text-gray-700">A list of all the users in your account including their name, title, email and source.</p>
                             </div>
-                            <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-                                <div>
-                                    <div class="relative flex items-center rounded-md shadow-sm">
-                                        <input type="text" name="search" id="search" class="flex-1 w-full rounded-l-md border-0 py-1.5 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 focus:z-10" placeholder="Search">
-                                        <select id="column" name="column" class="flex-0 w-fit -ml-px rounded-r-md border-0 py-1.5 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                                            <option value="email">Email</option>
-                                            <option value="first_name">First Name</option>
-                                        </select>
-                                    </div>
+                            <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none flex items-center gap-x-3">
+                                <div class="relative flex items-center rounded-md shadow-sm">
+                                    <input v-model="search" type="text" @blur="handleSearch" @keydown.enter="handleSearch" name="search" id="search" class="flex-1 w-full rounded-l-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 focus:z-10" placeholder="Search">
+                                    <select v-model="column" id="column" @change="handleSearch" name="column" class="flex-0 w-fit -ml-px rounded-r-md border-0 py-1.5 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                        <option value="email">Email</option>
+                                        <option value="first_name">First Name</option>
+                                    </select>
                                 </div>
-
+                                <SecondaryButton @click="router.get(route('dashboard'))" v-if="query.search">Clear</SecondaryButton>
                             </div>
                         </div>
                         <div class="mt-8 flow-root">
