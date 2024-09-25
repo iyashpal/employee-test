@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Http;
+
 use function Pest\Laravel\{withoutVite};
 
 /*
@@ -18,6 +20,7 @@ pest()->extend(Tests\TestCase::class)
     ->use(\Illuminate\Foundation\Testing\WithConsoleEvents::class)
     ->beforeEach(function () {
         withoutVite();
+        Http::preventStrayRequests();
     })
     ->in('Feature');
 
