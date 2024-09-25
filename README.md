@@ -51,7 +51,7 @@ OR
 
 OR
 
-- If you are none of above and have required tools installed on your system (PHP Preprocessor, Composer, Node.js) then simple run this command from project root `php artisan serve`. You can now access the project on url `127.0.0.1:8000`.
+- If you are none of above and have required tools installed on your system (PHP Preprocessor, Composer, Node.js, MySQL or Sqlite) then simple run this command from project root `php artisan serve`. You can now access the project on url `127.0.0.1:8000`.
 
 
 Now try to access the app on browser:
@@ -63,7 +63,7 @@ Now try to access the app on browser:
 #### Setup Login User
 - Navigate to url `/register` and register your self.
 - `MustVerifyEmail` is implemented to `User` model so you have to manually verify your account in users table.
-- To mark user as verified put DateTime format string in `email_verified_at` column and you are ready to login. If you login without verify it will show a re-send verification mail page.
+- To mark user as verified put DateTime format string in `email_verified_at` column in `users` table and you are ready to login. If you login without verify it will show a re-send verification mail page.
 - Once you mark the user verified you can login with the credentials you entered while registration.
 
 Can see the dashboard?
@@ -76,10 +76,10 @@ Can see the dashboard?
 ## Questions & Answers
 - Is your code testable?
 
-> Yes, I have tried to cover everything in tests. Added architecture unit tests presets as well as the feature tests. 
+> Yes, I have tried to cover everything in tests. Added architecture unit tests presets (which maintains some code style rules recommended for a laravel application) as well as the feature tests. 
 
 - What happens if the API is unavailable?
-> If anything wrong happens with the APIs the command will exit with 0 code. As we will be using the scheduler to fetch the data using command line so it won't affect the app. 
+> If anything wrong happens with the APIs the command will exit with 1 code. As we will be using the scheduler to fetch and sync the data using cron job or schedule worker so it won't affect the app. 
 - If we wanted to add more searchable fields in the future, this should be an easy task.
 > Searchable fields are fully configurable. All we just need is to add/remove the field in search dropdown. 
 - When the scheduled task runs, what happens if the user already exists?
