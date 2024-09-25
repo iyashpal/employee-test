@@ -3,12 +3,8 @@
 use App\Facades\Reqres;
 use Illuminate\Support\Facades\Http;
 
-use function Pest\Laravel\artisan;
-use function PHPUnit\Framework\assertTrue;
-use function PHPUnit\Framework\assertCount;
-use function PHPUnit\Framework\assertEquals;
-use function PHPUnit\Framework\assertIsArray;
-use function Pest\Laravel\assertDatabaseCount;
+use function Pest\Laravel\{artisan, assertDatabaseCount};
+use function PHPUnit\Framework\{assertTrue, assertCount, assertEquals, assertIsArray};
 
 function generateRecords(int $start = 1, int $end = 12): array
 {
