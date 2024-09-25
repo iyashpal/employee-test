@@ -1,5 +1,7 @@
 <?php
 
+use function Pest\Laravel\{withoutVite};
+
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -14,6 +16,9 @@
 pest()->extend(Tests\TestCase::class)
     ->use(\Illuminate\Foundation\Testing\RefreshDatabase::class)
     ->use(\Illuminate\Foundation\Testing\WithConsoleEvents::class)
+    ->beforeEach(function () {
+        withoutVite();
+    })
     ->in('Feature');
 
 /*
