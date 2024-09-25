@@ -19,6 +19,20 @@ OR
 
 - [Docker desktop](https://www.docker.com/) (available for windows/macos)
 
+#### Tech Stack
+
+This app uses:
+
+| Area               | Technology                                                            |
+|:-------------------|:----------------------------------------------------------------------|
+| Backend Framework  | `Laravel` with `Inertia JS`                                           |
+| Testing Framework  | `Pest PHP`                                                            |
+| Database           | `Sqlite` (100% compatible with `mysql`, `pgsql`, `mariadb`, `sqlsrv`) |
+| Frontend Framework | `Vue JS`                                                              |
+| Css Framework      | `Tailwindcss`                                                         |
+| CS Fixer           | `Laravel Pint`                                                        |
+
+
 #### Setup Steps
 
 - Use the `git clone` command (`git clone https://github.com/iyashpal/laravel-test.git`) to pull the code into your system. 
