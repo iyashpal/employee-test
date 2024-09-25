@@ -70,8 +70,10 @@ Can see the dashboard?
 > 🎉Congratulations🎊 project setup is successful now.
 
 - Want to run the scheduler?
-> If yes, all you have to setup the every minutes cron job which should run the artisan command `php artisan schedule:run`.
-> And in case you want to run it locally run `php artisan schedule:work`. You will get realtime command execution in terminal.
+> If yes, all you have to setup the every minutes/seconds cron job which should run the artisan command `php artisan schedule:run`.
+> And in case you want to run it locally run `php artisan schedule:work`. You will get realtime command execution in terminal. The command is already configured
+> with per minute interval execution in `routes/console.php` file. If needed you can change the interval there. 
+
 
 ## Questions & Answers
 - Is your code testable?
