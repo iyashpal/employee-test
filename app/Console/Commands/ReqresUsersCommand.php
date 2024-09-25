@@ -14,7 +14,7 @@ class ReqresUsersCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'reqres:sync-users {--fetch-all : Fetch all records pages records.} {--per-page-records=10 : The number of records to pull per page from ReqRes}';
+    protected $signature = 'reqres:sync-users {--fetch-all : Fetch all pages records.} {--per-page-records=10 : The number of records to pull per page from ReqRes}';
 
     /**
      * The console command description.
